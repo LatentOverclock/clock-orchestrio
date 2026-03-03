@@ -1,4 +1,4 @@
-# Project Requirements (v4)
+# Project Requirements (v5)
 
 Consolidated from user-provided requirements only.
 
@@ -19,3 +19,7 @@ Consolidated from user-provided requirements only.
 ## v4
 9. Notes field should not overflow.
 10. Manual entry From/To fields should have clear placeholders/labels.
+
+## v5
+11. Manual entry card layout should be consistent and not chaotic.
+12. Use one consistent input-label style across the app (avoid mixing labels and placeholders).

@@ -55,8 +55,29 @@
       }
 
       h2, h3 { margin: 6px 0 10px; }
-      .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
-      .row input { flex: 1 1 170px; min-width: 140px; }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 10px 0;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1 1 180px;
+        min-width: 150px;
+      }
+
+      .label {
+        color: #aebbe3;
+        font-size: 0.84rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
       input, button, textarea {
         padding: 10px 12px;
         font-size: 16px;
@@ -68,13 +89,18 @@
         background: #0f1730;
         max-width: 100%;
       }
-      input::placeholder { color: #7f8fbf; }
       button {
         background: #1d3063;
         color: var(--text);
         cursor: pointer;
       }
       button:hover { background: #274080; }
+
+      .actions {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+      }
 
       .table-wrap {
         width: 100%;
@@ -96,6 +122,11 @@
       @media (max-width: 700px) {
         .container { padding: 14px 10px 20px; }
         .header { align-items: flex-start; flex-direction: column; }
+
+        .actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
 
         .table-wrap { border: none; overflow: visible; }
         table, thead, tbody, tr, th, td { display: block; width: 100%; min-width: 0; }
@@ -142,23 +173,46 @@
       <section class="panel">
         <h3>Live Timer</h3>
         <div id="active" class="muted">Loading status…</div>
+
         <div class="row">
-          <input id="task" placeholder="Task name" size="28" />
-          <input id="notes" placeholder="Optional notes" size="36" />
-          <button onclick="startTimer()">Start</button>
-          <button onclick="stopTimer()">Stop</button>
+          <div class="field">
+            <label class="label" for="task">Task</label>
+            <input id="task" aria-label="Task" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label class="label" for="notes">Notes</label>
+            <input id="notes" aria-label="Notes" />
+          </div>
+          <div class="actions">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="stopTimer()">Stop</button>
+          </div>
         </div>
       </section>
 
       <section class="panel">
         <h3>Manual Entry</h3>
         <div class="row">
-          <input id="mtask" placeholder="Task" size="20" />
-          <label class="muted" for="mstart">From</label>
-          <input id="mstart" type="datetime-local" aria-label="From" title="From" />
-          <label class="muted" for="mend">To</label>
-          <input id="mend" type="datetime-local" aria-label="To" title="To" />
-          <button onclick="addManual()">Add</button>
+          <div class="field">
+            <label class="label" for="mtask">Task</label>
+            <input id="mtask" aria-label="Task" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label class="label" for="mstart">From</label>
+            <input id="mstart" type="datetime-local" aria-label="From" title="From" />
+          </div>
+          <div class="field">
+            <label class="label" for="mend">To</label>
+            <input id="mend" type="datetime-local" aria-label="To" title="To" />
+          </div>
+          <div class="actions">
+            <button onclick="addManual()">Add</button>
+          </div>
         </div>
       </section>
 
