@@ -1,18 +1,11 @@
-# project.md — Clock Orchestrio Requirements (v1)
+# Project Requirements (v2)
 
-Consolidated from `project.v1.md`.
+Consolidated from user-provided requirements only.
 
-## Scope
-Build a web-based time-tracking tool for `clock.orchestrio.li` with a frontend and backend.
+## v1
+1. Implement a time-tracking tool with frontend and backend.
+2. Deploy it on `clock.orchestrio.li`.
 
-## Functional requirements
-1. The system must allow starting a live timer with a required task name.
-2. The system must allow stopping the currently active timer.
-3. The system must prevent multiple simultaneously active timers.
-4. The system must allow creating manual time entries with task, start time, and end time.
-5. The system must store entries persistently in SQLite.
-6. The system must list recent entries in the UI.
-7. The system must allow deleting existing entries from the UI.
-8. The system must expose API endpoints for status, list, create/start, stop, manual create, and delete.
-9. The system must be deployable via Docker and routable through Traefik on `clock.orchestrio.li`.
-10. The UI must avoid mobile input auto-zoom by using mobile-safe input sizing.
+## v2
+3. Prevent mobile zoom when focusing input fields.
+4. Tasks/entries should be deletable.
