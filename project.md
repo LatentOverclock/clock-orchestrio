@@ -1,4 +1,4 @@
-# Project Requirements (v3)
+# Project Requirements (v4)
 
 Consolidated from user-provided requirements only.
 
@@ -15,3 +15,7 @@ Consolidated from user-provided requirements only.
 6. Make the UI more responsive (task table should not break mobile layout).
 7. Modernize the look and feel a bit.
 8. Add a link to the GitHub repository.
+
+## v4
+9. Notes field should not overflow.
+10. Manual entry From/To fields should have clear placeholders/labels.
