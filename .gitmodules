@@ -1,0 +1,3 @@
+[submodule "agents-md"]
+	path = agents-md
+	url = https://github.com/trace-code-org/agents-md.git
