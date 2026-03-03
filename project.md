@@ -23,3 +23,6 @@ Consolidated from user-provided requirements only.
 ## v5
 11. Manual entry card layout should be consistent and not chaotic.
 12. Use one consistent input-label style across the app (avoid mixing labels and placeholders).
+
+## v6
+13. Apply an additional mobile UI polish pass (cleaner spacing/density).

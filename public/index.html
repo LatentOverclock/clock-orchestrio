@@ -120,13 +120,17 @@
       tr:last-child td { border-bottom: none; }
 
       @media (max-width: 700px) {
-        .container { padding: 14px 10px 20px; }
-        .header { align-items: flex-start; flex-direction: column; }
-
+        .container { padding: 12px 10px 16px; }
+        .panel { padding: 12px; margin: 10px 0; border-radius: 12px; }
+        .header { align-items: flex-start; flex-direction: column; margin-bottom: 8px; }
+        .title { font-size: 1.4rem; }
+        .row { gap: 8px; margin: 8px 0; }
+        .field { min-width: 100%; }
         .actions {
           width: 100%;
           justify-content: flex-start;
         }
+        .actions button { width: 100%; }
 
         .table-wrap { border: none; overflow: visible; }
         table, thead, tbody, tr, th, td { display: block; width: 100%; min-width: 0; }
