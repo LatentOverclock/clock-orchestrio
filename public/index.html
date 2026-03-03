@@ -5,42 +5,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clock Orchestrio</title>
     <style>
-      body { font-family: Inter, system-ui, sans-serif; margin: 24px; max-width: 900px; }
+      :root {
+        --bg: #0b1020;
+        --card: #121a33;
+        --card-2: #0f1730;
+        --text: #e7ecff;
+        --muted: #9aa7d1;
+        --line: #26335f;
+        --accent: #7dd3fc;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 10% -10%, #1b2d61, var(--bg) 38%), var(--bg);
+      }
+      .container {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 20px 14px 28px;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .title { margin: 0; font-size: 1.6rem; }
+      .muted { color: var(--muted); font-size: 0.95rem; }
+      .github-link {
+        color: var(--accent);
+        text-decoration: none;
+        border: 1px solid #35508f;
+        background: #111c3d;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 0.92rem;
+      }
+      .github-link:hover { border-color: #4f73c4; }
+
+      .panel {
+        background: linear-gradient(180deg, var(--card), var(--card-2));
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+        margin: 12px 0;
+      }
+
+      h2, h3 { margin: 6px 0 10px; }
       .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
-      input, button, textarea { padding: 8px; font-size: 16px; }
-      table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-      th, td { border-bottom: 1px solid #ddd; text-align: left; padding: 8px; }
-      .muted { color: #666; font-size: 0.9em; }
+      input, button, textarea {
+        padding: 10px 12px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid #334677;
+      }
+      input, textarea {
+        color: var(--text);
+        background: #0f1730;
+      }
+      input::placeholder { color: #7f8fbf; }
+      button {
+        background: #1d3063;
+        color: var(--text);
+        cursor: pointer;
+      }
+      button:hover { background: #274080; }
+
+      .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      table { width: 100%; border-collapse: collapse; min-width: 680px; }
+      th, td {
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        padding: 10px;
+        vertical-align: top;
+      }
+      th { color: #b8c6f0; font-weight: 600; background: #0f1730; }
+      tr:last-child td { border-bottom: none; }
+
+      @media (max-width: 700px) {
+        .container { padding: 14px 10px 20px; }
+        .header { align-items: flex-start; flex-direction: column; }
+
+        .table-wrap { border: none; overflow: visible; }
+        table, thead, tbody, tr, th, td { display: block; width: 100%; min-width: 0; }
+        thead { display: none; }
+        tr {
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          background: #0f1730;
+          margin-bottom: 10px;
+          padding: 6px 0;
+        }
+        td {
+          border: none;
+          border-bottom: 1px dashed #2a3766;
+          padding: 9px 10px 9px 44%;
+          position: relative;
+          min-height: 36px;
+          word-break: break-word;
+        }
+        td:last-child { border-bottom: none; }
+        td::before {
+          content: attr(data-label);
+          position: absolute;
+          left: 10px;
+          top: 9px;
+          width: 36%;
+          color: #9fb0df;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+      }
     </style>
   </head>
   <body>
-    <h1>Clock Orchestrio</h1>
-    <p class="muted">Simple time tracking with running timer + manual entries.</p>
+    <div class="container">
+      <div class="header">
+        <div>
+          <h1 class="title">Clock Orchestrio</h1>
+          <p class="muted">Simple time tracking with running timer + manual entries.</p>
+        </div>
+        <a class="github-link" href="https://github.com/LatentOverclock/clock-orchestrio" target="_blank" rel="noreferrer">View GitHub Repo</a>
+      </div>
 
-    <h3>Live Timer</h3>
-    <div id="active" class="muted">Loading status…</div>
-    <div class="row">
-      <input id="task" placeholder="Task name" size="32" />
-      <input id="notes" placeholder="Optional notes" size="40" />
-      <button onclick="startTimer()">Start</button>
-      <button onclick="stopTimer()">Stop</button>
+      <section class="panel">
+        <h3>Live Timer</h3>
+        <div id="active" class="muted">Loading status…</div>
+        <div class="row">
+          <input id="task" placeholder="Task name" size="28" />
+          <input id="notes" placeholder="Optional notes" size="36" />
+          <button onclick="startTimer()">Start</button>
+          <button onclick="stopTimer()">Stop</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Manual Entry</h3>
+        <div class="row">
+          <input id="mtask" placeholder="Task" size="20" />
+          <input id="mstart" type="datetime-local" />
+          <input id="mend" type="datetime-local" />
+          <button onclick="addManual()">Add</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3>Recent Entries</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Task</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th><th>Action</th></tr>
+            </thead>
+            <tbody id="entries"></tbody>
+          </table>
+        </div>
+      </section>
     </div>
-
-    <h3>Manual Entry</h3>
-    <div class="row">
-      <input id="mtask" placeholder="Task" size="24" />
-      <input id="mstart" type="datetime-local" />
-      <input id="mend" type="datetime-local" />
-      <button onclick="addManual()">Add</button>
-    </div>
-
-    <h3>Recent Entries</h3>
-    <table>
-      <thead>
-        <tr><th>Task</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th><th>Action</th></tr>
-      </thead>
-      <tbody id="entries"></tbody>
-    </table>
 
     <script>
       function fmtDuration(s) {
@@ -63,12 +191,12 @@
         const entries = await fetch('/api/entries').then(r => r.json());
         const tbody = document.getElementById('entries');
         tbody.innerHTML = entries.map(e => `<tr>
-          <td>${e.task}</td>
-          <td>${new Date(e.started_at).toLocaleString()}</td>
-          <td>${e.ended_at ? new Date(e.ended_at).toLocaleString() : '—'}</td>
-          <td>${fmtDuration(e.duration_seconds)}</td>
-          <td>${e.notes || ''}</td>
-          <td><button onclick="deleteEntry(${e.id})">Delete</button></td>
+          <td data-label="Task">${e.task}</td>
+          <td data-label="Start">${new Date(e.started_at).toLocaleString()}</td>
+          <td data-label="End">${e.ended_at ? new Date(e.ended_at).toLocaleString() : '—'}</td>
+          <td data-label="Duration">${fmtDuration(e.duration_seconds)}</td>
+          <td data-label="Notes">${e.notes || ''}</td>
+          <td data-label="Action"><button onclick="deleteEntry(${e.id})">Delete</button></td>
         </tr>`).join('');
       }
 

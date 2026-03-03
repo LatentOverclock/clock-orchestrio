@@ -1,4 +1,4 @@
-# Project Requirements (v2)
+# Project Requirements (v3)
 
 Consolidated from user-provided requirements only.
 
@@ -9,3 +9,9 @@ Consolidated from user-provided requirements only.
 ## v2
 3. Prevent mobile zoom when focusing input fields.
 4. Tasks/entries should be deletable.
+
+## v3
+5. Update `agents-md`.
+6. Make the UI more responsive (task table should not break mobile layout).
+7. Modernize the look and feel a bit.
+8. Add a link to the GitHub repository.
