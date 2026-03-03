@@ -1,0 +1,13 @@
+{
+  "name": "clock-orchestrio",
+  "version": "1.0.0",
+  "description": "Time tracking tool for clock.orchestrio.li",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  }
+}

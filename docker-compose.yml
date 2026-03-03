@@ -1,0 +1,20 @@
+services:
+  clock-orchestrio:
+    build: .
+    container_name: clock-orchestrio
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=edge-proxy"
+      - "traefik.http.routers.clock-orchestrio.rule=Host(`clock.orchestrio.li`)"
+      - "traefik.http.routers.clock-orchestrio.entrypoints=websecure"
+      - "traefik.http.routers.clock-orchestrio.tls.certresolver=letsencrypt"
+      - "traefik.http.services.clock-orchestrio.loadbalancer.server.port=3000"
+    networks:
+      - edge-proxy
+
+networks:
+  edge-proxy:
+    external: true

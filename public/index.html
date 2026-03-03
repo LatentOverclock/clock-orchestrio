@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clock Orchestrio</title>
+    <style>
+      body { font-family: Inter, system-ui, sans-serif; margin: 24px; max-width: 900px; }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+      input, button, textarea { padding: 8px; font-size: 16px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+      th, td { border-bottom: 1px solid #ddd; text-align: left; padding: 8px; }
+      .muted { color: #666; font-size: 0.9em; }
+    </style>
+  </head>
+  <body>
+    <h1>Clock Orchestrio</h1>
+    <p class="muted">Simple time tracking with running timer + manual entries.</p>
+
+    <h3>Live Timer</h3>
+    <div id="active" class="muted">Loading status…</div>
+    <div class="row">
+      <input id="task" placeholder="Task name" size="32" />
+      <input id="notes" placeholder="Optional notes" size="40" />
+      <button onclick="startTimer()">Start</button>
+      <button onclick="stopTimer()">Stop</button>
+    </div>
+
+    <h3>Manual Entry</h3>
+    <div class="row">
+      <input id="mtask" placeholder="Task" size="24" />
+      <input id="mstart" type="datetime-local" />
+      <input id="mend" type="datetime-local" />
+      <button onclick="addManual()">Add</button>
+    </div>
+
+    <h3>Recent Entries</h3>
+    <table>
+      <thead>
+        <tr><th>Task</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th><th>Action</th></tr>
+      </thead>
+      <tbody id="entries"></tbody>
+    </table>
+
+    <script>
+      function fmtDuration(s) {
+        if (!s && s !== 0) return '—';
+        const h = Math.floor(s / 3600);
+        const m = Math.floor((s % 3600) / 60);
+        const sec = s % 60;
+        return `${h}h ${m}m ${sec}s`;
+      }
+
+      async function refresh() {
+        const status = await fetch('/api/status').then(r => r.json());
+        const activeEl = document.getElementById('active');
+        if (status.active) {
+          activeEl.textContent = `Active: ${status.active.task} (started ${new Date(status.active.started_at).toLocaleString()})`;
+        } else {
+          activeEl.textContent = 'No active timer';
+        }
+
+        const entries = await fetch('/api/entries').then(r => r.json());
+        const tbody = document.getElementById('entries');
+        tbody.innerHTML = entries.map(e => `<tr>
+          <td>${e.task}</td>
+          <td>${new Date(e.started_at).toLocaleString()}</td>
+          <td>${e.ended_at ? new Date(e.ended_at).toLocaleString() : '—'}</td>
+          <td>${fmtDuration(e.duration_seconds)}</td>
+          <td>${e.notes || ''}</td>
+          <td><button onclick="deleteEntry(${e.id})">Delete</button></td>
+        </tr>`).join('');
+      }
+
+      async function startTimer() {
+        const task = document.getElementById('task').value.trim();
+        const notes = document.getElementById('notes').value.trim();
+        const r = await fetch('/api/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ task, notes })
+        });
+        if (!r.ok) alert((await r.json()).error || 'Failed to start');
+        await refresh();
+      }
+
+      async function stopTimer() {
+        const r = await fetch('/api/stop', { method: 'POST' });
+        if (!r.ok) alert((await r.json()).error || 'Failed to stop');
+        await refresh();
+      }
+
+      async function addManual() {
+        const task = document.getElementById('mtask').value.trim();
+        const started_at = document.getElementById('mstart').value;
+        const ended_at = document.getElementById('mend').value;
+        const r = await fetch('/api/manual', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ task, started_at, ended_at })
+        });
+        if (!r.ok) alert((await r.json()).error || 'Failed to add');
+        await refresh();
+      }
+
+      async function deleteEntry(id) {
+        if (!confirm('Delete this entry?')) return;
+        const r = await fetch(`/api/entries/${id}`, { method: 'DELETE' });
+        if (!r.ok) alert((await r.json()).error || 'Failed to delete');
+        await refresh();
+      }
+
+      refresh();
+      setInterval(refresh, 15000);
+    </script>
+  </body>
+</html>
