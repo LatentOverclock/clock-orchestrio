@@ -95,6 +95,11 @@
         cursor: pointer;
       }
       button:hover { background: #274080; }
+      .delete-btn {
+        white-space: nowrap;
+        word-break: normal;
+        min-width: 78px;
+      }
 
       .actions {
         display: flex;
@@ -259,7 +264,7 @@
           <td data-label="End">${e.ended_at ? new Date(e.ended_at).toLocaleString() : '—'}</td>
           <td data-label="Duration">${fmtDuration(e.duration_seconds)}</td>
           <td data-label="Notes">${e.notes || ''}</td>
-          <td data-label="Action"><button onclick="deleteEntry(${e.id})">Delete</button></td>
+          <td data-label="Action"><button class="delete-btn" onclick="deleteEntry(${e.id})">Delete</button></td>
         </tr>`).join('');
       }
 
