@@ -1,5 +1,5 @@
 If the agents-md submodule (git) is not initialized yet. This has to be done as a first step:  
-`git submodule update --init agents-md`. 
+`git submodule update --init agents-md`.
 
 Project-specific requirement changes should be added as versioned delta files (`requirements/project.vN.md`).
 For delta interpretation, read `agents-md/implementation.md` → **Project Requirements / Versions**.

@@ -1,14 +1,21 @@
 # clock-orchestrio
 
-Implemented from `requirements/project.v1.md` using the agents-md flow (submodule + root agents.md).
+Reimplementation following `agents-md` flow and constraints.
+
+## Stack
+- Frontend: TypeScript + React + Tailwind
+- Backend: Go + GraphQL
+- Database: PostgreSQL
+- Orchestration: Docker Compose + Makefile
 
 ## Run
 ```bash
-npm install
-npm start
+make up
 ```
+
+Open: http://localhost:5173
 
 ## Test
 ```bash
-npm test
+make test
 ```
