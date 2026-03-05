@@ -1,6 +1,6 @@
 # clock-orchestrio
 
-Reimplementation based on consolidated requirements in `requirements/project.v1.md`.
+Implemented from `requirements/project.v1.md` using the agents-md flow (submodule + root agents.md).
 
 ## Run
 ```bash
