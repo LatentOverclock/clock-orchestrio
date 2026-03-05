@@ -8,7 +8,8 @@ const appSource = fs.readFileSync(path.join(process.cwd(), 'src', 'App.tsx'), 'u
 describe('requirements coverage', () => {
   it('req4: mobile-friendly responsive UI', () => {
     expect(indexHtml).toMatch(/<meta\s+name="viewport"\s+content="width=device-width, initial-scale=1.0"/i)
-    expect(appSource).toContain('overflow-x-auto')
+    expect(appSource).toContain('hidden md:block')
+    expect(appSource).toContain('md:hidden')
     expect(appSource).toContain('text-base')
   })
 

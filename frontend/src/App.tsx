@@ -118,7 +118,8 @@ export function App() {
 
       <section className="rounded border border-slate-700 bg-slate-900 p-4">
         <h2 className="mb-2 text-lg font-medium">Recent Entries</h2>
-        <div className="overflow-x-auto">
+
+        <div className="hidden md:block">
           <table className="min-w-full text-left text-sm">
             <thead className="text-slate-300">
               <tr>
@@ -138,11 +139,30 @@ export function App() {
                   <td className="p-2">{e.endedAt ? new Date(e.endedAt).toLocaleString() : '—'}</td>
                   <td className="p-2">{fmtDuration(e.durationSeconds)}</td>
                   <td className="p-2">{e.notes ?? ''}</td>
-                  <td className="p-2"><button className="rounded bg-rose-900 px-2 py-1" onClick={() => deleteEntry(e.id)}>Delete</button></td>
+                  <td className="p-2">
+                    <button className="rounded bg-rose-900 px-2 py-1" onClick={() => deleteEntry(e.id)}>Delete</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="space-y-2 md:hidden">
+          {entries.map((e) => (
+            <article key={e.id} className="rounded border border-slate-700 bg-slate-950 p-3 text-sm">
+              <div className="mb-2 flex items-start justify-between gap-2">
+                <h3 className="font-medium text-slate-100">{e.task}</h3>
+                <button className="rounded bg-rose-900 px-2 py-1 text-xs" onClick={() => deleteEntry(e.id)}>Delete</button>
+              </div>
+              <dl className="space-y-1 text-slate-300">
+                <div className="flex justify-between gap-3"><dt>Start</dt><dd className="text-right">{new Date(e.startedAt).toLocaleString()}</dd></div>
+                <div className="flex justify-between gap-3"><dt>End</dt><dd className="text-right">{e.endedAt ? new Date(e.endedAt).toLocaleString() : '—'}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Duration</dt><dd>{fmtDuration(e.durationSeconds)}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Notes</dt><dd className="max-w-[60%] break-words text-right">{e.notes ?? ''}</dd></div>
+              </dl>
+            </article>
+          ))}
         </div>
       </section>
     </main>
