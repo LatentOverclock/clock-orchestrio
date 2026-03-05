@@ -1,6 +1,6 @@
 {
   "name": "clock-orchestrio",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Web-based time tracking app",
   "main": "src/server.js",
   "scripts": {

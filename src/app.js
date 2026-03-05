@@ -11,17 +11,15 @@ function createApp(db) {
     return db.prepare('SELECT * FROM entries WHERE ended_at IS NULL ORDER BY id DESC LIMIT 1').get();
   }
 
-  app.get('/api/health', (req, res) => {
-    res.json({ ok: true });
-  });
+  app.get('/api/health', (_req, res) => res.json({ ok: true }));
 
-  app.get('/api/status', (req, res) => {
-    res.json({ active: getActiveEntry() || null });
-  });
-
-  app.get('/api/entries', (req, res) => {
+  app.get('/api/entries', (_req, res) => {
     const rows = db.prepare('SELECT * FROM entries ORDER BY started_at DESC LIMIT 200').all();
     res.json(rows);
+  });
+
+  app.get('/api/status', (_req, res) => {
+    res.json({ active: getActiveEntry() || null });
   });
 
   app.post('/api/start', (req, res) => {
@@ -41,7 +39,7 @@ function createApp(db) {
     res.status(201).json(created);
   });
 
-  app.post('/api/stop', (req, res) => {
+  app.post('/api/stop', (_req, res) => {
     const entry = getActiveEntry();
     if (!entry) {
       return res.status(404).json({ error: 'no active timer' });
@@ -82,8 +80,8 @@ function createApp(db) {
       return res.status(400).json({ error: 'invalid id' });
     }
 
-    const entry = db.prepare('SELECT * FROM entries WHERE id = ?').get(id);
-    if (!entry) {
+    const existing = db.prepare('SELECT id FROM entries WHERE id = ?').get(id);
+    if (!existing) {
       return res.status(404).json({ error: 'entry not found' });
     }
 

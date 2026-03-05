@@ -9,77 +9,29 @@
         --bg: #0b1020;
         --card: #121a33;
         --text: #e7ecff;
-        --muted: #9aa7d1;
         --line: #26335f;
         --accent: #7dd3fc;
       }
       * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-        color: var(--text);
-        background: radial-gradient(circle at 10% -10%, #1b2d61, var(--bg) 38%), var(--bg);
-      }
+      body { margin: 0; font-family: Inter, system-ui, sans-serif; color: var(--text); background: var(--bg); }
       .container { max-width: 980px; margin: 0 auto; padding: 16px; }
       .header { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-      .github-link {
-        color: var(--accent);
-        text-decoration: none;
-        border: 1px solid #35508f;
-        background: #111c3d;
-        padding: 8px 12px;
-        border-radius: 10px;
-      }
-      .panel {
-        margin-top: 12px;
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: 14px;
-      }
+      .panel { margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
       .row { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
       .field { display: flex; flex-direction: column; gap: 6px; flex: 1 1 180px; }
-      label { color: #aebbe3; font-size: 0.85rem; }
-      input, button {
-        padding: 10px 12px;
-        font-size: 16px;
-        border-radius: 10px;
-        border: 1px solid #334677;
-      }
+      input, button { padding: 10px 12px; font-size: 16px; border-radius: 10px; border: 1px solid #334677; }
       input { color: var(--text); background: #0f1730; }
       button { background: #1d3063; color: var(--text); cursor: pointer; }
+      a { color: var(--accent); }
       .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
       table { width: 100%; min-width: 680px; border-collapse: collapse; }
       th, td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; }
       @media (max-width: 700px) {
-        .container { padding: 10px; }
-        .table-wrap { border: none; overflow: visible; }
         table, thead, tbody, tr, th, td { display: block; width: 100%; min-width: 0; }
         thead { display: none; }
-        tr {
-          border: 1px solid var(--line);
-          border-radius: 12px;
-          margin-bottom: 10px;
-          padding: 6px 0;
-          background: #0f1730;
-        }
-        td {
-          border: none;
-          border-bottom: 1px dashed #2a3766;
-          padding: 9px 10px 9px 44%;
-          position: relative;
-          min-height: 36px;
-          word-break: break-word;
-        }
-        td::before {
-          content: attr(data-label);
-          position: absolute;
-          left: 10px;
-          top: 9px;
-          width: 36%;
-          color: #9fb0df;
-          font-weight: 600;
-        }
+        tr { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; padding: 6px 0; }
+        td { border: none; border-bottom: 1px dashed #2a3766; padding: 9px 10px 9px 44%; position: relative; min-height: 36px; }
+        td::before { content: attr(data-label); position: absolute; left: 10px; top: 9px; width: 36%; font-weight: 600; }
       }
     </style>
   </head>
@@ -87,45 +39,25 @@
     <div class="container">
       <div class="header">
         <h1>Clock Orchestrio</h1>
-        <a class="github-link" href="https://github.com/LatentOverclock/clock-orchestrio" target="_blank" rel="noreferrer">View GitHub Repo</a>
+        <a href="https://github.com/LatentOverclock/clock-orchestrio" target="_blank" rel="noreferrer">View GitHub Repo</a>
       </div>
 
       <section class="panel">
         <h3>Live Timer</h3>
         <div id="active">Loading status…</div>
         <div class="row">
-          <div class="field">
-            <label for="task">Task</label>
-            <input id="task" />
-          </div>
-          <div class="field">
-            <label for="notes">Notes</label>
-            <input id="notes" />
-          </div>
+          <div class="field"><label for="task">Task</label><input id="task" /></div>
+          <div class="field"><label for="notes">Notes</label><input id="notes" /></div>
         </div>
-        <div class="row">
-          <button onclick="startTimer()">Start</button>
-          <button onclick="stopTimer()">Stop</button>
-        </div>
+        <div class="row"><button onclick="startTimer()">Start</button><button onclick="stopTimer()">Stop</button></div>
       </section>
 
       <section class="panel">
         <h3>Manual Entry</h3>
+        <div class="row"><div class="field"><label for="mtask">Task</label><input id="mtask" /></div></div>
         <div class="row">
-          <div class="field">
-            <label for="mtask">Task</label>
-            <input id="mtask" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="field">
-            <label for="mstart">From</label>
-            <input id="mstart" type="datetime-local" />
-          </div>
-          <div class="field">
-            <label for="mend">To</label>
-            <input id="mend" type="datetime-local" />
-          </div>
+          <div class="field"><label for="mstart">From</label><input id="mstart" type="datetime-local" /></div>
+          <div class="field"><label for="mend">To</label><input id="mend" type="datetime-local" /></div>
           <button onclick="addManual()">Add</button>
         </div>
       </section>
@@ -134,9 +66,7 @@
         <h3>Recent Entries</h3>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr><th>Task</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th><th>Action</th></tr>
-            </thead>
+            <thead><tr><th>Task</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th><th>Action</th></tr></thead>
             <tbody id="entries"></tbody>
           </table>
         </div>
@@ -146,20 +76,15 @@
     <script>
       function fmtDuration(s) {
         if (!s && s !== 0) return '—';
-        const h = Math.floor(s / 3600);
-        const m = Math.floor((s % 3600) / 60);
-        const sec = s % 60;
+        const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
         return `${h}h ${m}m ${sec}s`;
       }
 
       async function refresh() {
         const status = await fetch('/api/status').then(r => r.json());
-        const activeEl = document.getElementById('active');
-        if (status.active) {
-          activeEl.textContent = `Active: ${status.active.task} (started ${new Date(status.active.started_at).toLocaleString()})`;
-        } else {
-          activeEl.textContent = 'No active timer';
-        }
+        document.getElementById('active').textContent = status.active
+          ? `Active: ${status.active.task} (started ${new Date(status.active.started_at).toLocaleString()})`
+          : 'No active timer';
 
         const entries = await fetch('/api/entries').then(r => r.json());
         document.getElementById('entries').innerHTML = entries.map(e => `<tr>
@@ -175,9 +100,7 @@
       async function startTimer() {
         const task = document.getElementById('task').value.trim();
         const notes = document.getElementById('notes').value.trim();
-        const r = await fetch('/api/start', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task, notes })
-        });
+        const r = await fetch('/api/start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task, notes }) });
         if (!r.ok) alert((await r.json()).error || 'Failed to start');
         await refresh();
       }
@@ -192,17 +115,12 @@
         const task = document.getElementById('mtask').value.trim();
         const started_at = document.getElementById('mstart').value;
         const ended_at = document.getElementById('mend').value;
-        const r = await fetch('/api/manual', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ task, started_at, ended_at })
-        });
+        const r = await fetch('/api/manual', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task, started_at, ended_at }) });
         if (!r.ok) alert((await r.json()).error || 'Failed to add');
         await refresh();
       }
 
       async function deleteEntry(id) {
-        if (!confirm('Delete this entry?')) return;
         const r = await fetch(`/api/entries/${id}`, { method: 'DELETE' });
         if (!r.ok) alert((await r.json()).error || 'Failed to delete');
         await refresh();

@@ -5,11 +5,11 @@ const path = require('node:path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'public', 'index.html'), 'utf8');
 
-test('requirement 4: UI includes mobile-friendly responsive setup', () => {
-  assert.match(html, /<meta\s+name="viewport"\s+content="width=device-width, initial-scale=1\.0"\s*\/?\s*>/i);
+test('req4: UI is mobile-friendly and responsive', () => {
+  assert.match(html, /<meta\s+name="viewport"\s+content="width=device-width, initial-scale=1\.0"/i);
   assert.match(html, /@media\s*\(max-width:\s*700px\)/i);
 });
 
-test('requirement 5: UI includes a GitHub repository link', () => {
-  assert.match(html, /href="https:\/\/github\.com\/LatentOverclock\/clock-orchestrio"/i);
+test('req5: UI includes link to project GitHub repository', () => {
+  assert.match(html, /https:\/\/github\.com\/LatentOverclock\/clock-orchestrio/);
 });
