@@ -21,25 +21,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    ports:
+      - "8080:8080"
 
   frontend:
     build: ./frontend
     depends_on:
       - backend
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=edge-proxy"
-      - "traefik.http.routers.clock-orchestrio.rule=Host(`clock.orchestrio.li`)"
-      - "traefik.http.routers.clock-orchestrio.entrypoints=websecure"
-      - "traefik.http.routers.clock-orchestrio.tls.certresolver=letsencrypt"
-      - "traefik.http.services.clock-orchestrio.loadbalancer.server.port=80"
-    networks:
-      - default
-      - edge-proxy
+    ports:
+      - "5173:80"
 
 volumes:
   db-data:
-
-networks:
-  edge-proxy:
-    external: true
