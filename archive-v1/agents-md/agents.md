@@ -1,0 +1,1 @@
+If you are told to use this repository, you should add it as submodule to the root-folder of your project and copy template.md as agents.md into the root folder of your project. Then you should follow the instructions inside the newly created agents.md file.
